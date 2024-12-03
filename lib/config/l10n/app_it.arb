@@ -3,6 +3,8 @@
   "title_app":"GymBro 🏆",
   "yes":"Si",
   "no":"No",
+  "theme": "Tema",
+  "select_theme": "Seleziona Tema",
   "login":"Login",
   "logout":"Logout",
   "add":"Aggiungi",

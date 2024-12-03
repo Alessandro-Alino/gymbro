@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
-import 'package:gymbro/config/theme/cubit/theme_cubit.dart';
+import 'package:gymbro/widget/app_drawer.dart';
 
 class StartApp extends StatelessWidget {
   const StartApp({super.key});
@@ -9,29 +8,13 @@ class StartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text(context.ltr.title_app),
       ),
-      body: Column(children: [
-        ElevatedButton(
-          onPressed: () {
-            context.read<ThemeCubit>().setTheme(ThemeMode.light);
-          },
-          child: Text(context.ltr.yes),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            context.read<ThemeCubit>().setTheme(ThemeMode.dark);
-          },
-          child: Text(context.ltr.yes),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            context.read<ThemeCubit>().setTheme(ThemeMode.system);
-          },
-          child: Text(context.ltr.yes),
-        ),
-      ]),
+      body: Center(
+        child: Text(context.ltr.title_app),
+      ),
     );
   }
 }
