@@ -1,0 +1,16 @@
+{
+  "@@locale": "it",
+  "title_app":"GymBro 🏆",
+  "yes":"Si",
+  "no":"No",
+  "login":"Login",
+  "logout":"Logout",
+  "add":"Aggiungi",
+  "delete":"Elimina",
+  "update":"Modifica",
+  "empty_list":"La lista è vuota",
+  "@_PAGE_NAME":{},
+  "profile_page":"Profilo",
+  "@_ERROR":{},
+  "error_example":"Errore"
+}
