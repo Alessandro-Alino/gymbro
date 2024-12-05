@@ -21,7 +21,7 @@ class AppProvider extends StatelessWidget {
       providers: [
         // Theme Cubit
         BlocProvider<ThemeCubit>(
-          create: (context) => ThemeCubit(),
+          create: (context) => ThemeCubit()..getTheme(),
         ),
       ],
       child: GestureDetector(
