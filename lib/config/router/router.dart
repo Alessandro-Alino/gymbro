@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymbro/app.dart';
 import 'package:gymbro/config/router/router_const.dart';
+import 'package:gymbro/feature/exercises/screen/exercise_list_page.dart';
+import 'package:gymbro/feature/programs/screen/program_list_page.dart';
 
 final goRouterKey = GlobalKey<NavigatorState>();
 
@@ -13,7 +15,19 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: startPage,
       builder: (BuildContext context, GoRouterState state) {
-        return const StartApp();
+        return const StartPage();
+      },
+    ),
+    GoRoute(
+      path: programListPage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ProgramListPage();
+      },
+    ),
+    GoRoute(
+      path: exerciseListPage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ExerciseListPage();
       },
     ),
   ],

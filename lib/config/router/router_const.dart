@@ -1,2 +1,3 @@
 const startPage = '/';
-const secondPage = '/secondPage';
+const programListPage = '/programListPage';
+const exerciseListPage = '/exerciseListPage';

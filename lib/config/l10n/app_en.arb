@@ -3,6 +3,7 @@
   "title_app":"GymBro 🏆",
   "yes":"Yes",
   "no":"No",
+  "save":"Save",
   "theme": "Theme",
   "select_theme": "Select Theme",
   "login":"Login",
@@ -10,9 +11,13 @@
   "add":"Add",
   "delete":"Delete",
   "update":"Update",
+  "update_name": "Update name",
   "empty_list":"The list is Empty",
   "@_PAGE_NAME":{},
   "profile_page":"Profile",
+  "program_list_page":"Program List",
+  "exercise_list_page":"Exercises List",
   "@_ERROR":{},
-  "error_example":"Error"
+  "error_example":"Error",
+  "cant_be_empty": "Can't be empty! 🙄"
 }
