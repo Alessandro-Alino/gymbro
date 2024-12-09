@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
-import 'package:gymbro/feature/programs/cubit/program_cubit.dart';
+import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
 import 'package:gymbro/feature/programs/widget/delete_program.dart';
 import 'package:gymbro/feature/programs/widget/update_program.dart';
@@ -11,17 +11,17 @@ class ProgramList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProgramCubit, List<ProgramModel>>(
+    return BlocBuilder<ProgramBloc, ProgramState>(
       builder: (context, state) {
-        return state.isEmpty
+        return state.programList.isEmpty
             ? Center(
                 child: Text(context.ltr.empty_list),
               )
             : ListView.builder(
-                itemCount: state.length + 1,
+                itemCount: state.programList.length + 1,
                 itemBuilder: (context, index) {
-                  if (index < state.length) {
-                    ProgramModel program = state[index];
+                  if (index < state.programList.length) {
+                    ProgramModel program = state.programList[index];
                     return Card(
                       child: ListTile(
                         shape: RoundedRectangleBorder(

@@ -7,7 +7,7 @@ import 'package:gymbro/config/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gymbro/database/app_db.dart';
 import 'package:gymbro/feature/exercises/cubit/exercises_cubit.dart';
-import 'package:gymbro/feature/programs/cubit/program_cubit.dart';
+import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -32,8 +32,8 @@ class AppProvider extends StatelessWidget {
             create: (context) => ThemeCubit()..getTheme(),
           ),
           // Programs Cubit
-          BlocProvider<ProgramCubit>(
-            create: (context) => ProgramCubit(
+          BlocProvider<ProgramBloc>(
+            create: (context) => ProgramBloc(
               appDB: context.read<AppDB>(),
             )..readProgram(),
           ),

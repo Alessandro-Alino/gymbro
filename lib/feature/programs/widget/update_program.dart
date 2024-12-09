@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
-import 'package:gymbro/feature/programs/cubit/program_cubit.dart';
+import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
 
 class UpdateProgram extends StatefulWidget {
@@ -83,7 +83,7 @@ class _UpdateProgramState extends State<UpdateProgram> {
                         name: programCntrl.text,
                       );
                       // Update DB
-                      await context.read<ProgramCubit>().updateProgram(program);
+                      await context.read<ProgramBloc>().updateProgram(program);
                       // Close Modal and hide keyboard
                       if (context.mounted) {
                         context.pop();

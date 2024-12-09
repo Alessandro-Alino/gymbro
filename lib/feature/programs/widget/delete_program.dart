@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymbro/feature/programs/cubit/program_cubit.dart';
+import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
 
 class DeleteProgram extends StatelessWidget {
@@ -12,7 +12,7 @@ class DeleteProgram extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        context.read<ProgramCubit>().deleteProgram(program);
+        context.read<ProgramBloc>().deleteProgram(program);
       },
       icon: const Icon(
         Icons.delete,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
-import 'package:gymbro/feature/programs/cubit/program_cubit.dart';
+import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/widget/program_list.dart';
 
 class ProgramListPage extends StatelessWidget {
@@ -23,7 +23,7 @@ class ProgramListPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await context.read<ProgramCubit>().createProgram();
+          await context.read<ProgramBloc>().createProgram();
         },
         child: const Icon(Icons.add),
       ),
