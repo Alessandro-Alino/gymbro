@@ -16,7 +16,6 @@ class ExerciseCubit extends Cubit<List<ExerciseModel>> {
     ExerciseModel exercise = ExerciseModel(
       name: 'Esercizio n. $index',
       descr: 'Descrizione Esercizio n. $index',
-      fkProgramID: 131,
     );
     // Insert to DB
     await db.insert(
@@ -24,9 +23,8 @@ class ExerciseCubit extends Cubit<List<ExerciseModel>> {
       exercise.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    List<ExerciseModel> exercisesList = List<ExerciseModel>.from(state);
-    exercisesList.add(exercise);
-    emit(exercisesList);
+    List<ExerciseModel>.from(state).add(exercise);
+    await readExercise();
   }
 
   // Read Programs
@@ -38,27 +36,27 @@ class ExerciseCubit extends Cubit<List<ExerciseModel>> {
     emit(exerciseList);
   }
 
-  ///  // Update Program
-//   Future<void> updateProgram(ProgramModel program) async {
-//     final db = await appDB.database;
-//     await db.update(
-//       DBConst.tableNamePR,
-//       program.toJson(),
-//       where: '${DBConst.idColPR} = ?',
-//       whereArgs: [program.id],
-//       conflictAlgorithm: ConflictAlgorithm.replace,
-//     );
-//     readProgram();
-//   }
+  // Update Program
+  Future<void> updateExercise(ExerciseModel exercise) async {
+    final db = await appDB.database;
+    await db.update(
+      DBConst.tableNameEX,
+      exercise.toJson(),
+      where: '${DBConst.idColEX} = ?',
+      whereArgs: [exercise.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    await readExercise();
+  }
 
-  ///  // Delete Program
-//   Future<void> deleteProgram(ProgramModel program) async {
-//     final db = await appDB.database;
-//     await db.delete(
-//       DBConst.tableNamePR,
-//       where: '${DBConst.idColPR} = ?',
-//       whereArgs: [program.id],
-//     );
-//     readProgram();
-//   }
+  // Delete Program
+  Future<void> deleteExercise(ExerciseModel exercise) async {
+    final db = await appDB.database;
+    await db.delete(
+      DBConst.tableNameEX,
+      where: '${DBConst.idColEX} = ?',
+      whereArgs: [exercise.id],
+    );
+    await readExercise();
+  }
 }

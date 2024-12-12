@@ -41,10 +41,13 @@ class AppProvider extends StatelessWidget {
           BlocProvider<ExerciseCubit>(
             create: (context) => ExerciseCubit(
               appDB: context.read<AppDB>(),
-            ),
+            )..readExercise(),
           ),
         ],
-        child: child,
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child,
+        ),
       ),
     );
   }
@@ -57,17 +60,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppProvider(
-      child: BlocBuilder<ThemeCubit, ThemeMode>(builder: (context, themeState) {
-        return MaterialApp.router(
-          supportedLocales: AppLocalizations.supportedLocales,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          routerConfig: router,
-          onGenerateTitle: (context) => context.ltr.title_app,
-          themeMode: themeState,
-          theme: themeLight,
-          darkTheme: themeDark,
-        );
-      }),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeState) {
+          return MaterialApp.router(
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            routerConfig: router,
+            onGenerateTitle: (context) => context.ltr.title_app,
+            themeMode: themeState,
+            theme: themeLight,
+            darkTheme: themeDark,
+          );
+        },
+      ),
     );
   }
 }

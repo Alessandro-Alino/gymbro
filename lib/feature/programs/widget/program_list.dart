@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
-import 'package:gymbro/feature/programs/widget/delete_program.dart';
-import 'package:gymbro/feature/programs/widget/update_program.dart';
+import 'package:gymbro/widget/delete_element.dart';
+import 'package:gymbro/feature/programs/widget/modal_update_program.dart';
 
 class ProgramList extends StatelessWidget {
   const ProgramList({super.key});
@@ -28,8 +28,11 @@ class ProgramList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         title: Text(program.name),
-                        trailing: DeleteProgram(program: program),
-                        onTap: () {},
+                        trailing: DeleteElement(
+                          onPressed: () {
+                            context.read<ProgramBloc>().deleteProgram(program);
+                          },
+                        ),
                         onLongPress: () async {
                           await showModalBottomSheet(
                               context: context,

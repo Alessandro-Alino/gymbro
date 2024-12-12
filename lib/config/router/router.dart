@@ -25,9 +25,9 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: exerciseListPage,
+      path: allExerciseListPage,
       builder: (BuildContext context, GoRouterState state) {
-        return const ExerciseListPage();
+        return const AllExerciseListPage();
       },
     ),
   ],

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 final themeLight = ThemeData(
+  useMaterial3: true,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.green.shade100,
+    seedColor: Colors.green.shade500,
     brightness: Brightness.light,
   ),
-  useMaterial3: true,
 );
 
 final themeDark = ThemeData(
+  useMaterial3: true,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.green.shade900,
+    seedColor: Colors.green.shade800,
     brightness: Brightness.dark,
   ),
-  useMaterial3: true,
 );

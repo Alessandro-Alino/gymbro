@@ -32,7 +32,8 @@ class DeleteProgramEvent extends ProgramEvent {
 
 class SelectProgramEvent extends ProgramEvent {
   SelectProgramEvent({required this.program});
-  final ProgramModel program;
+
+  final ProgramModel? program;
 
   @override
   List<Object?> get props => [program];

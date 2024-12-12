@@ -15,18 +15,26 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
           programList: [],
           selectedProgram: null,
         )) {
-    on<CreateProgramEvent>((event, emit) => _createProgram());
-    on<ReadProgramEvent>((event, emit) => _readProgram(event, emit));
-    on<UpdateProgramEvent>((event, emit) => _updateProgram(event.program));
-    on<DeleteProgramEvent>((event, emit) => _deleteProgram(event.program));
-    on<SelectProgramEvent>((event, emit) => _selectProgram(
+    on<CreateProgramEvent>(
+      (event, emit) async => await _createProgram(event, emit),
+    );
+    on<ReadProgramEvent>(
+      (event, emit) async => await _readProgram(event, emit),
+    );
+    on<UpdateProgramEvent>(
+      (event, emit) async => await _updateProgram(event.program),
+    );
+    on<DeleteProgramEvent>(
+      (event, emit) async => await _deleteProgram(event.program),
+    );
+    on<SelectProgramEvent>((event, emit) async => await _selectProgram(
           event,
           emit,
           event.program,
         ));
-    on<UnSelectProgramEvent>((event, emit) => _unSelectProgram(event, emit));
   }
 
+  //------------------------------------------//
   createProgram() => add(CreateProgramEvent());
 
   readProgram() => add(ReadProgramEvent());
@@ -39,16 +47,20 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     add(DeleteProgramEvent(program: program));
   }
 
-  selectProgram(ProgramModel program) {
+  selectProgram(ProgramModel? program) {
     add(SelectProgramEvent(program: program));
   }
 
   unSelectProgram() => add(UnSelectProgramEvent());
 
+  //------------------------------------------//
   final AppDB appDB;
 
   // Create Program
-  Future<void> _createProgram() async {
+  Future<void> _createProgram(
+    ProgramEvent event,
+    Emitter<ProgramState> emit,
+  ) async {
     final db = await appDB.database;
 
     int index = state.programList.length + 1;
@@ -60,10 +72,8 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
       program.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    List<ProgramModel> programList = List<ProgramModel>.from(state.programList);
-    programList.add(program);
-
-    readProgram();
+    List<ProgramModel>.from(state.programList).add(program);
+    await _readProgram(event, emit);
   }
 
 // Read Programs
@@ -75,7 +85,16 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     var result = await db.query(DBConst.tableNamePR);
     List<ProgramModel> programList =
         result.map((e) => ProgramModel.fromJson(e)).toList();
-    emit(state.copyWith(programList: programList));
+    emit(state.copyWith(
+      programList: programList,
+      selectedProgram: state.selectedProgram,
+    ));
+    // If it's the first Program, select by [_selectProgram]
+    if (state.programList.length == 1) {
+      selectProgram(state.programList.first);
+    } else if (state.programList.isEmpty) {
+      selectProgram(null);
+    }
   }
 
 // Update Program
@@ -103,16 +122,13 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
   }
 
   // Select Program
-  void _selectProgram(
+  Future<void> _selectProgram(
     ProgramEvent event,
     Emitter<ProgramState> emit,
-    ProgramModel program,
+    ProgramModel? program,
   ) async {
-    emit(state.copyWith(selectedProgram: program));
-  }
-
-  //_unSelectProgram
-  _unSelectProgram(ProgramEvent event, Emitter<ProgramState> emit) {
-    emit(state.copyWith(selectedProgram: null));
+    program == null
+        ? emit(state.copyWith(selectedProgram: null))
+        : emit(state.copyWith(selectedProgram: program));
   }
 }

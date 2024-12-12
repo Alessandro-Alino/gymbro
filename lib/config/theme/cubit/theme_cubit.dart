@@ -24,6 +24,20 @@ class ThemeCubit extends Cubit<ThemeMode> {
     await prefs.setString(_themeKey, mode.name);
     emit(mode);
   }
+
+  bool isLightTheme(Brightness brightness) {
+    switch (state) {
+      case ThemeMode.light:
+        return true;
+      case ThemeMode.dark:
+        return false;
+      case ThemeMode.system:
+        return brightness == Brightness.light;
+      default:
+        return false;
+    }
+  }
+
 }
 
 extension ThemeModeExtension on ThemeMode {

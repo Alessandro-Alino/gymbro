@@ -37,7 +37,7 @@ class AppDrawer extends StatelessWidget {
               // Call also "pop" to close the Menu Drawer even when navigate to new page
               context
                 ..pop()
-                ..push(exerciseListPage);
+                ..push(allExerciseListPage);
             },
             leading: const Icon(Icons.featured_play_list_outlined),
             title: Text(context.ltr.exercise_list_page),

@@ -1,3 +1,3 @@
 const startPage = '/';
 const programListPage = '/programListPage';
-const exerciseListPage = '/exerciseListPage';
+const allExerciseListPage = '/allExerciseListPage';

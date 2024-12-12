@@ -42,8 +42,20 @@ class AppDB {
         ${DBConst.idColEX} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${DBConst.nameColEX} TEXT NOT NULL,
         ${DBConst.descrColEX} TEXT,
-        ${DBConst.fkProgramIDColEX} INTEGER,
-        FOREIGN KEY (${DBConst.fkProgramIDColEX}) REFERENCES ${DBConst.tableNamePR} (${DBConst.idColPR}) ON DELETE CASCADE
+        ${DBConst.fkProgramIDColEX} INTEGER
+      )
+    ''');
+
+    // Create EX to PR Table
+    await db.execute('''
+      CREATE TABLE ${DBConst.tableNamePREX} (
+        ${DBConst.idColPREX} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${DBConst.prIdColPREX} INTEGER,
+        ${DBConst.exIdColPREX} INTEGER,
+        ${DBConst.setsColPREX} INTEGER,
+        ${DBConst.repsColPREX} INTEGER,
+        FOREIGN KEY (${DBConst.prIdColPREX}) REFERENCES ${DBConst.tableNamePR} (${DBConst.idColPR}) ON DELETE CASCADE,
+        FOREIGN KEY (${DBConst.exIdColPREX}) REFERENCES ${DBConst.tableNameEX} (${DBConst.idColEX}) ON DELETE CASCADE
       )
     ''');
   }

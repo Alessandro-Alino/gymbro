@@ -16,18 +16,18 @@ class UpdateProgram extends StatefulWidget {
 
 class _UpdateProgramState extends State<UpdateProgram> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final programCntrl = TextEditingController();
+  final _programCntrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    programCntrl.text = widget.program.name;
+    _programCntrl.text = widget.program.name;
   }
 
   @override
   void dispose() {
     super.dispose();
-    programCntrl.dispose();
+    _programCntrl.dispose();
   }
 
   @override
@@ -60,7 +60,7 @@ class _UpdateProgramState extends State<UpdateProgram> {
             // TextFormField to change name of the Program
             TextFormField(
               autofocus: true,
-              controller: programCntrl,
+              controller: _programCntrl,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
@@ -80,7 +80,7 @@ class _UpdateProgramState extends State<UpdateProgram> {
                     if(_formKey.currentState!.validate()){
                       // Update program
                       ProgramModel program = widget.program.copyWith(
-                        name: programCntrl.text,
+                        name: _programCntrl.text,
                       );
                       // Update DB
                       await context.read<ProgramBloc>().updateProgram(program);

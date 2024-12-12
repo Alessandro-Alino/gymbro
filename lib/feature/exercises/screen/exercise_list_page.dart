@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
 import 'package:gymbro/feature/exercises/cubit/exercises_cubit.dart';
-import 'package:gymbro/feature/exercises/widget/exercise_list.dart';
+import 'package:gymbro/feature/exercises/widget/all_exercise_list.dart';
 
-class ExerciseListPage extends StatefulWidget {
-  const ExerciseListPage({super.key});
+class AllExerciseListPage extends StatefulWidget {
+  const AllExerciseListPage({super.key});
 
   @override
-  State<ExerciseListPage> createState() => _ExerciseListPageState();
+  State<AllExerciseListPage> createState() => _ExerciseListPageState();
 }
 
-class _ExerciseListPageState extends State<ExerciseListPage> {
+class _ExerciseListPageState extends State<AllExerciseListPage> {
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: ExerciseList(),
+            child: AllExerciseList(),
           ),
         ],
       ),

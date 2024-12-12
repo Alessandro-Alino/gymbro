@@ -18,7 +18,7 @@ class CustomFlexibleSpaceBar extends StatelessWidget {
         }
 
         return FlexibleSpaceBar(
-          expandedTitleScale: 1.4,
+          expandedTitleScale: 1.2,
           titlePadding: EdgeInsets.zero,
           title: Row(
             children: [

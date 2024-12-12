@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
 import 'package:gymbro/feature/exercises/cubit/exercises_cubit.dart';
 import 'package:gymbro/feature/exercises/model/exercise_model.dart';
+import 'package:gymbro/feature/exercises/widget/modal_update_exercise.dart';
+import 'package:gymbro/widget/delete_element.dart';
 
-class ExerciseList extends StatelessWidget {
-  const ExerciseList({super.key});
+class AllExerciseList extends StatelessWidget {
+  const AllExerciseList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExerciseCubit, List<ExerciseModel>>(
       builder: (context, state) {
         return state.isEmpty
-            ? Center(
-                child: Text(context.ltr.empty_list),
-              )
+            ? Center(child: Text(context.ltr.empty_list))
             : ListView.builder(
                 itemCount: state.length + 1,
                 itemBuilder: (context, index) {
@@ -25,6 +25,25 @@ class ExerciseList extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
+                        trailing: DeleteElement(
+                          onPressed: () {
+                            context
+                                .read<ExerciseCubit>()
+                                .deleteExercise(exercise);
+                          },
+                        ),
+                        onLongPress: () async {
+                          await showModalBottomSheet(
+                              context: context,
+                              showDragHandle: true,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return UpdateExercise(exercise: exercise);
+                              }).then(
+                            (e) =>
+                                FocusManager.instance.primaryFocus?.unfocus(),
+                          );
+                        },
                         title: Text(exercise.name),
                       ),
                     );
@@ -48,7 +67,8 @@ class ExerciseList extends StatelessWidget {
                       ],
                     );
                   }
-                });
+                },
+              );
       },
     );
   }
