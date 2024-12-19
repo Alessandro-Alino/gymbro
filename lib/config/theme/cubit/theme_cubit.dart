@@ -33,9 +33,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
         return false;
       case ThemeMode.system:
         return brightness == Brightness.light;
-      default:
-        return false;
-    }
+      }
   }
 
 }

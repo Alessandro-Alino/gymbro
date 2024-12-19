@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.gymbro"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.1207797327"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

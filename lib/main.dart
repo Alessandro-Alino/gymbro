@@ -7,6 +7,7 @@ import 'package:gymbro/config/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gymbro/database/app_db.dart';
 import 'package:gymbro/feature/exercises/cubit/exercises_cubit.dart';
+import 'package:gymbro/feature/prex/bloc/prex_bloc.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class AppProvider extends StatelessWidget {
           BlocProvider<ThemeCubit>(
             create: (context) => ThemeCubit()..getTheme(),
           ),
-          // Programs Cubit
+          // Programs Bloc
           BlocProvider<ProgramBloc>(
             create: (context) => ProgramBloc(
               appDB: context.read<AppDB>(),
@@ -42,6 +43,12 @@ class AppProvider extends StatelessWidget {
             create: (context) => ExerciseCubit(
               appDB: context.read<AppDB>(),
             )..readExercise(),
+          ),
+          // Prex Bloc
+          BlocProvider<PrexBloc>(
+            create: (context) => PrexBloc(
+              appDB: context.read<AppDB>(),
+            ),
           ),
         ],
         child: GestureDetector(

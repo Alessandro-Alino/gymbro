@@ -4,7 +4,7 @@ import 'package:gymbro/config/l10n/app_local.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
 import 'package:gymbro/widget/delete_element.dart';
-import 'package:gymbro/feature/programs/widget/modal_update_program.dart';
+import 'package:gymbro/widget/dialog_update.dart';
 
 class ProgramList extends StatelessWidget {
   const ProgramList({super.key});
@@ -34,16 +34,22 @@ class ProgramList extends StatelessWidget {
                           },
                         ),
                         onLongPress: () async {
-                          await showModalBottomSheet(
+                          await showDialog(
                               context: context,
-                              showDragHandle: true,
-                              isScrollControlled: true,
                               builder: (context) {
-                                return UpdateProgram(program: program);
-                              }).then(
-                            (e) =>
-                                FocusManager.instance.primaryFocus?.unfocus(),
-                          );
+                                return DialogUpdate(
+                                  name: program.name,
+                                  onSave: (newName) async {
+                                    // Update program
+                                    ProgramModel updatedProgram =
+                                        program.copyWith(name: newName);
+                                    // Update DB
+                                    await context
+                                        .read<ProgramBloc>()
+                                        .updateProgram(updatedProgram);
+                                  },
+                                );
+                              });
                         },
                       ),
                     );

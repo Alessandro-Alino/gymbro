@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
-import 'package:gymbro/config/theme/cubit/theme_cubit.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/model/program_model.dart';
 
@@ -18,7 +17,8 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
   @override
   void initState() {
     super.initState();
-    _dropDrownSetName();
+    // Added short delay in initState to Set the name
+    Future.delayed(Durations.short1, () => _dropDrownSetName());
   }
 
   @override
@@ -50,7 +50,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
         return Padding(
           padding: const EdgeInsets.only(left: 8.0, right: 16.0, bottom: 4.0),
           child: DropdownMenu<ProgramModel>(
-            width: 200.0,
+            width: 185.0,
             menuHeight: 350.0,
             controller: _dropDownCtrl,
             enabled: state.programList.isNotEmpty,
@@ -64,14 +64,16 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
               ),
             ),
             menuStyle: MenuStyle(
-              backgroundColor: WidgetStatePropertyAll(context
-                      .read<ThemeCubit>()
-                      .isLightTheme(MediaQuery.of(context).platformBrightness)
-                  ? Colors.green.shade200
-                  : Colors.green.shade900),
+              backgroundColor: WidgetStatePropertyAll(
+                Theme.of(context).colorScheme.inversePrimary,
+              ),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
+                  side: BorderSide(
+                    width: 2,
+                    color: Color.fromRGBO(5, 51, 8, 1.0),
+                  ),
                 ),
               ),
             ),

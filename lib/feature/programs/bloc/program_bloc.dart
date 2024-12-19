@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/database/app_db.dart';
 import 'package:gymbro/database/db_const.dart';
@@ -51,8 +52,6 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     add(SelectProgramEvent(program: program));
   }
 
-  unSelectProgram() => add(UnSelectProgramEvent());
-
   //------------------------------------------//
   final AppDB appDB;
 
@@ -85,15 +84,16 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     var result = await db.query(DBConst.tableNamePR);
     List<ProgramModel> programList =
         result.map((e) => ProgramModel.fromJson(e)).toList();
-    emit(state.copyWith(
+    emit(ProgramState(
       programList: programList,
       selectedProgram: state.selectedProgram,
     ));
-    // If it's the first Program, select by [_selectProgram]
-    if (state.programList.length == 1) {
-      selectProgram(state.programList.first);
-    } else if (state.programList.isEmpty) {
-      selectProgram(null);
+    // AutoSelect the first ProgramID at the start
+    if (state.programList.isNotEmpty) {
+      await Future.delayed(
+        Durations.short1,
+        () => _selectProgram(event, emit, state.programList.first),
+      );
     }
   }
 
@@ -110,7 +110,7 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     readProgram();
   }
 
-// Delete Program
+  // Delete Program
   Future<void> _deleteProgram(ProgramModel program) async {
     final db = await appDB.database;
     await db.delete(
@@ -128,7 +128,13 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     ProgramModel? program,
   ) async {
     program == null
-        ? emit(state.copyWith(selectedProgram: null))
-        : emit(state.copyWith(selectedProgram: program));
+        ? emit(ProgramState(
+            programList: state.programList,
+            selectedProgram: null,
+          ))
+        : emit(ProgramState(
+            programList: state.programList,
+            selectedProgram: program,
+          ));
   }
 }

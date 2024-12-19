@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
 import 'package:gymbro/feature/exercises/cubit/exercises_cubit.dart';
 import 'package:gymbro/feature/exercises/model/exercise_model.dart';
-import 'package:gymbro/feature/exercises/widget/modal_update_exercise.dart';
 import 'package:gymbro/widget/delete_element.dart';
+import 'package:gymbro/widget/dialog_update.dart';
 
 class AllExerciseList extends StatelessWidget {
   const AllExerciseList({super.key});
@@ -33,16 +33,22 @@ class AllExerciseList extends StatelessWidget {
                           },
                         ),
                         onLongPress: () async {
-                          await showModalBottomSheet(
+                          await showDialog(
                               context: context,
-                              showDragHandle: true,
-                              isScrollControlled: true,
                               builder: (context) {
-                                return UpdateExercise(exercise: exercise);
-                              }).then(
-                            (e) =>
-                                FocusManager.instance.primaryFocus?.unfocus(),
-                          );
+                                return DialogUpdate(
+                                  name: exercise.name,
+                                  onSave: (newName) async {
+                                    // Update Exercise
+                                    ExerciseModel updatedExercise =
+                                        exercise.copyWith(name: newName);
+                                    // Update DB
+                                    await context
+                                        .read<ExerciseCubit>()
+                                        .updateExercise(updatedExercise);
+                                  },
+                                );
+                              });
                         },
                         title: Text(exercise.name),
                       ),

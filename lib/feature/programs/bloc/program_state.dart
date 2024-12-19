@@ -9,16 +9,6 @@ final class ProgramState extends Equatable {
     required this.selectedProgram,
   });
 
-  // CopyWith method
-  ProgramState copyWith({
-    List<ProgramModel>? programList,
-    ProgramModel? selectedProgram,
-  }) =>
-      ProgramState(
-        programList: programList ?? this.programList,
-        selectedProgram: selectedProgram,
-      );
-
   @override
   List<Object?> get props => [programList, selectedProgram];
 }

@@ -72,7 +72,7 @@ class SelectTheme extends StatelessWidget {
                   Icon(
                     iconData,
                     size: 35.0,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white,
                     shadows: const [
                       Shadow(color: Colors.black, blurRadius:10.0)
                     ],

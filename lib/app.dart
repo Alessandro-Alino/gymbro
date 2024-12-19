@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/config/l10n/app_local.dart';
+import 'package:gymbro/feature/prex/widget/prex_list.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
 import 'package:gymbro/feature/programs/widget/program_list_is_empty.dart';
 import 'package:gymbro/widget/add_exer_to_progr.dart';
@@ -28,12 +29,8 @@ class StartPage extends StatelessWidget {
             return state.programList.isEmpty
                 // If ProgramList is Empty
                 ? ProgramListIsEmpty()
-                // List of Exercises per Selected Program
-                : SliverFillRemaining(
-                    child: Center(
-                      child: Text('Arrivo ...'),
-                    ),
-                  );
+                // List of Exercises per SelectedProgram
+                : PrexList();
           }),
         ],
       ),
@@ -45,8 +42,8 @@ class StartPage extends StatelessWidget {
                 onPressed: () async {
                   await showModalBottomSheet(
                       context: context,
-                      showDragHandle: true,
                       isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
                       builder: (context) {
                         return AddExerToProgr();
                       });

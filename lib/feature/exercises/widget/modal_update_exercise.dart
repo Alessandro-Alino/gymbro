@@ -34,7 +34,7 @@ class _UpdateExerciseState extends State<UpdateExercise> {
   Widget build(BuildContext context) {
     return Container(
       constraints:
-      BoxConstraints(minHeight: MediaQuery.sizeOf(context).height / 2),
+          BoxConstraints(minHeight: MediaQuery.sizeOf(context).height / 2),
       padding: EdgeInsets.only(
         left: 16.0,
         right: 16.0,
@@ -64,8 +64,9 @@ class _UpdateExerciseState extends State<UpdateExercise> {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
-              validator: (e){
-                if(e!.isEmpty){
+              textCapitalization: TextCapitalization.sentences,
+              validator: (e) {
+                if (e!.isEmpty) {
                   return context.ltr.cant_be_empty;
                 }
                 return null;
@@ -77,13 +78,15 @@ class _UpdateExerciseState extends State<UpdateExercise> {
               children: [
                 ActionChip(
                   onPressed: () async {
-                    if(_formKey.currentState!.validate()){
+                    if (_formKey.currentState!.validate()) {
                       // Update program
                       ExerciseModel exercise = widget.exercise.copyWith(
                         name: _exerciseCntrl.text,
                       );
                       // Update DB
-                      await context.read<ExerciseCubit>().updateExercise(exercise);
+                      await context
+                          .read<ExerciseCubit>()
+                          .updateExercise(exercise);
                       // Close Modal and hide keyboard
                       if (context.mounted) {
                         context.pop();

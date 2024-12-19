@@ -54,10 +54,10 @@ class AppDB {
         ${DBConst.exIdColPREX} INTEGER,
         ${DBConst.setsColPREX} INTEGER,
         ${DBConst.repsColPREX} INTEGER,
+        ${DBConst.weightColPREX} REAL,
         FOREIGN KEY (${DBConst.prIdColPREX}) REFERENCES ${DBConst.tableNamePR} (${DBConst.idColPR}) ON DELETE CASCADE,
         FOREIGN KEY (${DBConst.exIdColPREX}) REFERENCES ${DBConst.tableNameEX} (${DBConst.idColEX}) ON DELETE CASCADE
       )
     ''');
   }
-  
 }
