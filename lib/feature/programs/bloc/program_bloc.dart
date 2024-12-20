@@ -92,7 +92,7 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     if (state.programList.isNotEmpty) {
       await Future.delayed(
         Durations.short1,
-        () => _selectProgram(event, emit, state.programList.first),
+        () => selectProgram(state.programList.first),
       );
     }
   }

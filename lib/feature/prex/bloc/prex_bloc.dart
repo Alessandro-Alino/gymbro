@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymbro/database/app_db.dart';
 import 'package:gymbro/database/db_const.dart';
+import 'package:gymbro/feature/exercises/model/exercise_model.dart';
 import 'package:gymbro/feature/prex/model/prex_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -10,7 +11,11 @@ part 'prex_event.dart';
 part 'prex_state.dart';
 
 class PrexBloc extends Bloc<PrexEvent, PrexState> {
-  PrexBloc({required this.appDB}) : super(ListPrexState(prexList: [])) {
+  PrexBloc({required this.appDB})
+      : super(ListPrexState(
+          prexList: [],
+          exerciseList: [],
+        )) {
     on<CreatePrexEvent>((event, emit) async => await _createPrex(
           event,
           emit,
@@ -64,14 +69,26 @@ class PrexBloc extends Bloc<PrexEvent, PrexState> {
     emit(LoadingPrexState());
     try {
       final db = await appDB.database;
-      var result = await db.query(
+      var resultPrex = await db.query(
         DBConst.tableNamePREX,
         where: '${DBConst.prIdColPREX} = ?',
         whereArgs: [programID],
       );
+      var resultExercise = await db.rawQuery(
+        '''
+        SELECT *
+        FROM ${DBConst.tableNameEX}
+        INNER JOIN ${DBConst.tableNamePREX} ON ${DBConst.tableNameEX}.id = ${DBConst.tableNamePREX}.exercise_id
+        WHERE ${DBConst.tableNamePREX}.program_id = ?
+        ''',
+        [programID],
+      );
       List<PrexModel> prexList =
-          result.map((e) => PrexModel.fromJson(e)).toList();
-      emit(ListPrexState(prexList: prexList));
+      resultPrex.map((e) => PrexModel.fromJson(e)).toList();
+      List<ExerciseModel> exerciseList =
+          resultExercise.map((e) => ExerciseModel.fromJson(e)).toList();
+
+      emit(ListPrexState(prexList: prexList, exerciseList: exerciseList));
     } catch (e) {
       emit(ErrorPrexState(error: '$e'));
     }

@@ -17,9 +17,10 @@ class ErrorPrexState extends PrexState {
 }
 
 class ListPrexState extends PrexState {
-  ListPrexState({required this.prexList});
+  ListPrexState({required this.prexList,required this.exerciseList});
 
   final List<PrexModel> prexList;
+  final List<ExerciseModel> exerciseList;
 
   @override
   List<Object?> get props => [prexList];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymbro/feature/exercises/model/exercise_model.dart';
 import 'package:gymbro/feature/prex/bloc/prex_bloc.dart';
 import 'package:gymbro/feature/prex/model/prex_model.dart';
 import 'package:gymbro/feature/programs/bloc/program_bloc.dart';
@@ -12,9 +13,8 @@ class PrexList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ProgramBloc, ProgramState>(
       listener: (context, state) {
-        // Select the programID to GroupBy, every time is selected
-        if (state.selectedProgram != null &&
-            state.selectedProgram!.id != null) {
+        // Filter by programID, every time is selected from Dropdown
+        if (state.selectedProgram != null) {
           context
               .read<PrexBloc>()
               .readPrex(programId: state.selectedProgram!.id!);
@@ -31,7 +31,8 @@ class PrexList extends StatelessWidget {
           } else if (state is ErrorPrexState) {
             return SliverFillRemaining(
               child: Center(
-                child: Text('Attenzione generato un errore: ${state.error}'),
+                child: Text(
+                    'Attenzione, è stato generato un errore: ${state.error}'),
               ),
             );
           } else if (state is ListPrexState) {
@@ -45,14 +46,16 @@ class PrexList extends StatelessWidget {
                     itemCount: state.prexList.length,
                     itemBuilder: (context, index) {
                       PrexModel prex = state.prexList[index];
-
-                      return ListTile(
-                        leading: Text('ID: ${prex.id}'),
-                        title: Text('${prex.exerciseId}'),
-                        trailing: DeleteElement(
-                          onPressed: () {
-                            context.read<PrexBloc>().deletePrex(prex: prex);
-                          },
+                      ExerciseModel exercise = state.exerciseList[index];
+                      return Card(
+                        child: ListTile(
+                          leading: Text('${prex.id}'),
+                          title: Text(exercise.name),
+                          trailing: DeleteElement(
+                            onPressed: () {
+                              context.read<PrexBloc>().deletePrex(prex: prex);
+                            },
+                          ),
                         ),
                       );
                     });
